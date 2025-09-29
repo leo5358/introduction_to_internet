@@ -1,3 +1,4 @@
-# introduction_to_internet
+# Introduction to Internet
 
-[hw1](leo5358.github.io/introduction_to_internet/#)
+### HW01
+[HW 01](https://leo5358.github.io/introduction_to_internet/)
