@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>楊立宇｜個人網站</title>
+  <meta name="description" content="個人靜態網站範本 — 簡潔、響應式、易於修改。" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+        <div class="brand">
+          <div>
+            <h1>楊立宇</h1>
+            <div class="pill">學生 • 演算法/資安愛好者</div>
+          </div>
+        </div>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+  
+      <section class="hero">
+        <div class="card intro">
+          <h2>嗨，我是楊立宇(鱷魚) </h2>
+          <p>我是一位對演算法與系統安全感興趣的學生。熱衷於學習各種新技術。</p>
+          <div class="cta">
+            <button class="btn btn-primary" onclick="downloadResume()">下載履歷</button>
+            <a class="btn btn-ghost" href="#projects">查看專案</a>
+          </div>
+  
+          <div class="section-title" style="margin-top:18px">
+            <h3>技能</h3>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="pill">cybersercurirty</span>
+            <span class="pill">C / C++</span>
+            <span class="pill">Python</span>
+          </div>
+        </div>
+  
+        <aside class="card profile">
+          <img class="avatar" src="/images/profile_pic.png" alt="我的大頭貼">  
+          <div style="font-weight:700">楊立宇</div>
+          <div class="meta">Taiwan• Taipei • NTNU</div>
+          <div class="links" style="margin-top:8px">
+            <a href="https://github.com/leo5358">GitHub</a>
+            <a href="https://www.linkedin.com/in/yang-liyu/">LinkedIn</a>
+            <a href="https://leetcode.com/u/Leo_from_tw_237/">Leetcode</a>
+          </div>
+        </aside>
+      </section>
+  
+      <section id="projects" class="card">
+        <div class="section-title">
+          <h3>專案集 & 筆記</h3>
+          <div class="pill">3 items</div>
+        </div>
+        <div class="grid">
+            <div class="project">
+                <a href="https://github.com/leo5358/passwd_daemon" target="_blank" style="text-decoration:none;color:inherit;">
+                  <h4>專案 - password daemon</h4>
+                  <p>以C語言實作Linux的密碼修改方案（練手用） </p>
+                </a>
+              </div>
+          <div class="project">
+                <a href="https://github.com/leo5358/mylang" target="_blank" style="text-decoration:none;color:inherit;">
+                    <h4>專案 - 自製程式語言</h4>
+                    <p>以C++為基底，所製作的 interpreter (未完成，repo仍處在混亂狀態)</p>
+                </a>
+          </div>
+          <div class="project">
+            <div class="project">
+               <a href="https://drive.google.com/drive/u/1/folders/1RZgxKFMnhDmdiE8NLPFwpOzTpaq47Gov" target="_blank" style="text-decoration:none;color:inherit;">
+                <h4>筆記 / 作業  - 「資安攻防演練」</h4>
+                <p>師大資工系，大碩合開課程之課程作業與筆記</p>
+            </div>
+          </div>
+        </div>
+      </section>
+  
+      <section id="about" class="card" style="margin-top:18px">
+        <div class="section-title"><h3>關於我</h3></div>
+        <p style="color:var(--muted)">我是 你的名字，現為學生。平常喜歡閱讀技術文章、做小專案、以及研究資安題目。歡迎透過下方方式聯絡我。</p>
+      </section>
+  
+      <section id="contact" class="card" style="margin-top:18px">
+        <div class="section-title"><h3>聯絡我</h3></div>
+        <div class="grid">
+          <div>
+            <p class="meta">Email</p>
+            <p>youremail@example.com</p>
+            <p class="meta" style="margin-top:12px">社群</p>
+            <p><a href="https://github.com/leo5358">GitHub</a> · <a href="https://www.linkedin.com/in/yang-liyu/">LinkedIn</a> </p>
+          </div>
+          <div>
+            <form class="contact-form" onsubmit="handleContact(event)">
+              <input type="text" id="name" placeholder="Your name" required />
+              <input type="email" id="email" placeholder="Your email" required style="margin-top:8px"/>
+              <textarea id="message" placeholder="Message" style="margin-top:8px" required></textarea>
+              <div style="display:flex;justify-content:flex-end;margin-top:8px">
+                <button class="btn btn-primary" type="submit">送出</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+  
+      <footer>
+        <div>© <span id="year"></span> 楊立宇</div>
+      </footer>
+
+  </div>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    function downloadResume(){
+      const url = 'resume.pdf';
+      window.open(url, '_blank');
+    }
+
+    function handleContact(e){
+      e.preventDefault();
+      const name = document.getElementById('name').value;
+      const email = document.getElementById('email').value;
+      const message = document.getElementById('message').value;
+      const subject = encodeURIComponent('來自個人網站的訊息 — ' + name);
+      const body = encodeURIComponent('From: ' + name + ' (' + email + ')\\n\\n' + message);
+      window.location.href = `mailto:youremail@example.com?subject=${subject}&body=${body}`;
+    }
+  </script>
+</body>
+</html>
