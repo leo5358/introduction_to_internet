@@ -1,5 +1,12 @@
 # Introduction to Internet
 
-- [HW 01](https://leo5358.github.io/introduction_to_internet/)
-- [HW 02](https://github.com/leo5358/introduction_to_internet/blob/main/web/app/(tabs)/index.tsx) 
-> note: I spent too much time debugging and haven't recorded the video yet. I will record it within two days.
+### hw01
+[HW 01](https://leo5358.github.io/introduction_to_internet/)
+### hw02
+- [code](https://github.com/leo5358/introduction_to_internet/blob/main/web/app/(tabs)/index.tsx)
+- [video](https://youtu.be/zwkQ79rglgM?si=ke0auO4pr-Zk65cV) 
+    #### 改變內容
+    - 將自由輸入模型 ID 改為下拉選單
+    - 回應支援Markdown
+    - 改變版面配置
+
