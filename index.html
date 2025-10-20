@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>楊立宇｜個人網站</title>
+  <meta name="description" content="個人靜態網站範本 — 簡潔、響應式、易於修改。" />
+  <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+        <div class="brand">
+          <div>
+            <h1>楊立宇</h1>
+            <div class="pill">學生 • 演算法/資安愛好者</div>
+          </div>
+        </div>
+        <nav>
+          <a href="#about">About</a>
+          <a href="#projects">Projects</a>
+          <a href="#contact">Contact</a>
+        </nav>
+      </header>
+  
+      <section class="hero">
+        <div class="card intro">
+          <h2>嗨，我是楊立宇(鱷魚) </h2>
+          <p>我是一位對演算法與系統安全感興趣的學生。熱衷於學習各種新技術。</p>
+  
+          <div class="section-title" style="margin-top:18px">
+            <h3>技能</h3>
+          </div>
+          <div style="display:flex;gap:8px;flex-wrap:wrap">
+            <span class="pill">cybersercurirty</span>
+            <span class="pill">C / C++</span>
+            <span class="pill">Python</span>
+          </div>
+        </div>
+  
+        <aside class="card profile">
+          <img class="avatar" src="profile_pic.png" alt="我的大頭貼">  
+          <div style="font-weight:700">楊立宇</div>
+          <div class="meta">Taiwan• Taipei • NTNU</div>
+          <div class="links" style="margin-top:8px">
+            <a href="https://github.com/leo5358">GitHub</a>
+            <a href="https://www.linkedin.com/in/yang-liyu/">LinkedIn</a>
+            <a href="https://leetcode.com/u/Leo_from_tw_237/">Leetcode</a>
+            <a href="https://play.picoctf.org/users/Leo_c137">picoCTF</a>
+          </div>
+        </aside>
+      </section>
+  
+      <section id="projects" class="card">
+        <div class="section-title">
+          <h3>專案集 & 筆記</h3>
+          <div class="pill" id="project-count">載入中...</div>
+        </div>
+        <div class="grid" id="project-grid">
+            <p style="color:var(--muted)">正在從 GitHub 載入專案...</p>
+        </div>
+      </section>
+  
+      <section id="about" class="card" style="margin-top:18px">
+        <div class="section-title"><h3>關於我</h3></div>
+        <p style="color:var(--muted)">我是楊立宇，現為學生。平常喜歡閱讀技術文章、做小專案、以及研究資安題目。歡迎透過下方方式聯絡我。</p>
+      </section>
+
+      <section id="ip-info" class="card" style="margin-top:18px">
+        <div class="section-title">
+          <h3>您的網路資訊</h3>
+          <div class="pill">Network Info</div>
+        </div>
+        <div id="ip-info-content">
+          <p style="color:var(--muted)">正在查詢您的網路資訊...</p>
+        </div>
+      </section>
+
+      <section id="security-news" class="card" style="margin-top:18px">
+        <div class="section-title">
+          <h3>資安新聞 (Top 5)</h3>
+          <div class="pill">From The Hacker News</div>
+        </div>
+        <div id="security-news-list" style="display: flex; flex-direction: column; gap: 12px;">
+          <p style="color:var(--muted)">載入最新資安新聞...</p>
+        </div>
+      </section>
+  
+      <section id="contact" class="card" style="margin-top:18px">
+        <div class="section-title"><h3>聯絡我</h3></div>
+        <div class="grid">
+          <div>
+            <p class="meta">Email</p>
+            <p>leo1yang5358@gmail.com (private)</p>
+            <p>liyu.yang@ntusa.ntu.edu.tw (臺大校園資訊相關議題)</p>
+            <p class="meta" style="margin-top:12px">社群</p>
+            <p><a href="https://github.com/leo5358">GitHub</a> · <a href="https://www.linkedin.com/in/yang-liyu/">LinkedIn</a> </p>
+          </div>
+          <div>
+            <form class="contact-form" action="https://formsubmit.co/leo1yang5358@gmail.com" method="POST">
+              <input type="text" id="name" name="name" placeholder="Your name" required />
+              <input type="email" id="email" name="email" placeholder="Your email" required style="margin-top:8px"/>
+              <textarea id="message" id="message" name="message" placeholder="Message" style="margin-top:8px" required></textarea>
+              <input type="hidden" name="_autoresponse" value="感謝您的來信，我會盡快回覆您！">
+              <div style="display:flex;justify-content:flex-end;margin-top:8px">
+                <button class="btn btn-primary" type="submit">送出</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </section>
+  
+      <footer>
+        <div>© <span id="year"></span> 楊立宇</div>
+      </footer>
+
+  </div>
+
+  <script>
+    // --- fetch repo from Github ---
+    async function fetchGitHubProjects() {
+      const grid = document.getElementById('project-grid');
+      const countPill = document.getElementById('project-count');
+      const username = 'leo5358'; 
+
+      try {
+        const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
+        if (!response.ok) throw new Error(`GitHub API 錯誤: ${response.status}`);
+        
+        const repos = await response.json();
+        
+        grid.innerHTML = ''; 
+        countPill.textContent = `${repos.length} items`;
+
+        repos.slice(0, 6).forEach(repo => {
+          const projectEl = document.createElement('div');
+          projectEl.className = 'project';
+          const description = repo.description || '點擊查看專案詳情';
+          projectEl.innerHTML = `
+            <a href="${repo.html_url}" target="_blank" style="text-decoration:none;color:inherit;">
+              <h4>專案 - ${repo.name}</h4>
+              <p>${description}</p>
+            </a>
+          `;
+          grid.appendChild(projectEl);
+        });
+
+      } catch (error) {
+        console.error('無法獲取 GitHub 專案:', error);
+        grid.innerHTML = '<p style="color:var(--muted)">無法載入 GitHub 專案。請稍後再試。</p>';
+        countPill.textContent = 'Error';
+      }
+    }
+
+    // --- get cybersecurity news ---
+    async function fetchSecurityNews() {
+      const list = document.getElementById('security-news-list');
+      const rssUrl = 'https://api.rss2json.com/v1/api.json?rss_url=https%3A%2F%2Ffeeds.feedburner.com%2FTheHackersNews';
+
+      try {
+        const response = await fetch(rssUrl);
+        if (!response.ok) throw new Error(`News API 錯誤: ${response.status}`);
+        
+        const data = await response.json();
+        if (data.status !== 'ok') throw new Error('RSS 服務錯誤');
+
+        list.innerHTML = ''; 
+
+        data.items.slice(0, 5).forEach(item => {
+          const newsEl = document.createElement('div');
+          newsEl.className = 'project'; 
+          const itemDate = new Date(item.pubDate).toLocaleDateString('zh-TW');
+
+          newsEl.innerHTML = `
+            <a href="${item.link}" target="_blank" style="text-decoration:none;color:inherit;">
+              <h4>${item.title}</h4>
+              <p>發布於: ${itemDate}</p>
+            </a>
+          `;
+          list.appendChild(newsEl);
+        });
+
+      } catch (error) {
+        console.error('無法獲取資安新聞:', error);
+        list.innerHTML = '<p style="color:var(--muted)">無法載入資安新聞。請稍後再試。</p>';
+      }
+    }
+
+    // --- 【功能 3】查詢 IP 網路資訊 (已更換為 ipinfo.io) ---
+    async function fetchIPInfo() {
+      const content = document.getElementById('ip-info-content');
+      
+      // 已更換 API 來源為 ipinfo.io (免費、穩定、CORS 設定正確)
+      const apiUrl = 'https://ipinfo.io/json';
+
+      try {
+        const response = await fetch(apiUrl);
+        if (!response.ok) throw new Error(`IP API 錯誤: ${response.status}`);
+        
+        const data = await response.json();
+
+        // 檢查 API 回傳的資料
+        if (!data.ip) throw new Error(`IP API 服務錯誤: 未回傳 IP`);
+
+        // ipinfo.io 的 org 欄位格式是 "AS12345 Google LLC"
+        // 我們只取後面的名稱
+        const orgName = data.org ? data.org.split(' ').slice(1).join(' ') : 'N/A';
+
+        // 成功獲取資料，建立 HTML 內容 (欄位名稱已更新)
+        content.innerHTML = `
+          <div>
+            <p class="meta" style="margin:0">您的 IP 位址</p>
+            <h4 style="margin:0 0 10px 0; color:var(--accent);">${data.ip}</h4>
+            
+            <p class="meta" style="margin:0">網路服務供應商 (ISP)/組織</p>
+            <p style="margin:0 0 10px 0">${orgName}</p>
+
+            <p class="meta" style="margin:0">地理位置</p>
+            <p style="margin:0">${data.city || 'N/A'}, ${data.region || 'N/A'}, ${data.country || 'N/A'}</p>
+          </div>
+        `;
+
+      } catch (error) {
+        console.error('無法獲T取 IP 資訊:', error);
+        content.innerHTML = '<p style="color:var(--muted)">無法查詢您的網路資訊。</p>';
+      }
+    }
+
+
+    // 當頁面 DOM 載入完成後，執行所有函式
+    document.addEventListener('DOMContentLoaded', () => {
+    document.getElementById('year').textContent = new Date().getFullYear();
+      
+      // call API function
+      fetchGitHubProjects(); 
+      fetchSecurityNews();
+      fetchIPInfo(); 
+    });
+  </script>
+</body>
+</html>
